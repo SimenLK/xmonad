@@ -147,6 +147,7 @@ myKeys =
     flip
         EZ.mkKeymap
         [ ("M-p", spawn dmenu)
+        , ("M-S-p", spawn "passmenu")
         , ("S-M-n", spawn "nautilus --no-desktop --browser")
         -- , ("S-M-q", spawn "gnome-session-quit --force")
         , ("<XF86AudioMute>", spawn "amixer -q -D pulse sset Master toggle")
