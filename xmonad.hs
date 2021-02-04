@@ -55,18 +55,17 @@ main = do
             , borderWidth = 1
             , normalBorderColor = "gray"
             , focusedBorderColor = "crimson"
-            , focusFollowsMouse = True
+            , focusFollowsMouse = False
             , workspaces = map show [1 .. 9]
             , startupHook =
                      gnomeRegister2
                   >> startup
                   >> startupHook defaultConfig
             }
+
 desktopLayouts =
-    onWorkspace "1"  mailLayout $
-    onWorkspace "2"  webLayout $
-    onWorkspaces (map show [3..9]) defLayout $
-    -- onWorkspace "9" expLayout $
+    onWorkspace "1"  webLayout $
+    onWorkspaces (map show [2..9]) defLayout $
     smartBorders (layoutHook defaultConfig)
     where
         defLayout = desktopLayoutModifiers $
@@ -75,8 +74,8 @@ desktopLayouts =
             smartBorders $ Full ||| Tall 1 (3/100) 0.65
         fullLayout = desktopLayoutModifiers $
             noBorders $ Full ||| Mirror (Tall 1 (3/100) 0.8)
-        mailLayout = desktopLayoutModifiers $
-            smartBorders $ Full ||| Tall 1 (3/100) 0.6
+        --mailLayout = desktopLayoutModifiers $
+        --    smartBorders $ Full ||| Tall 1 (3/100) 0.6
         expLayout =
           desktopLayoutModifiers $
           smartBorders $
@@ -94,9 +93,6 @@ myManageHook =
     [ [isFullscreen --> myDoFullFloat]
     , [className =? c --> doIgnore | c <- myIgnores]
     , [className =? c --> doCenterFloat | c <- myFloats]
-    , [className =? c --> doShift "1" | c <- onWs1]
-    , [className =? c --> doShift "2" | c <- onWs2]
-    -- , [className =? c --> doShift "7" | c <- onWs7]
     , [className =? c --> doShift "8" | c <- onWs8]
     , [className =? c --> doShift "9" | c <- onWs9]
     , [appName =? n --> doCenterFloat | n <- myNames]
@@ -105,21 +101,14 @@ myManageHook =
     ]
     -- workspaces
   where
-    onWs1 = myMail
-    onWs2 = myWeb ++ myMusic
-    onWs7 = myChat
-    onWs8 = myGimp
-    onWs9 = myVm
+    onWs1 = myWeb
+    onWs8 = myChat
+    onWs9 = myMusic
     -- classnames
-    myMail = ["wavebox", "Evolution"]
-    myWeb = ["Firefox", "Google-chrome", "Chromium", "Chromium-browser"]
-    myMovie = ["mplayer2", "Vlc"]
-    myMusic = ["Rhythmbox", "Spotify"]
-    myChat = ["Pidgin", "Buddy List", "Skype"]
-    myGimp = ["Gimp"]
-    myVm = ["VirtualBox", "Remmina"]
+    myWeb = ["Firefox"]
+    myMusic = ["spotify"]
+    myChat = ["discord", "Teams"]
     myFloats =
-        myMovie ++
         [ "Xmessage"
         , "XFontSel"
         , "Do"
@@ -128,6 +117,7 @@ myManageHook =
         , "Launchbox"
         , "Pinentry"
         , "Gcr-prompter"
+        , "zoom"
         ]
     --, "VirtualBox"
     --, "Remmina"
@@ -212,7 +202,7 @@ myLogHook dbus = def
     , ppHidden = wrap " " " "
     , ppWsSep = ""
     , ppSep = " | "
-    , ppTitle =  wrap ("%{F" ++ green ++ "}") "%{F-}" . myAddSpaces 25
+    , ppTitle =  wrap ("%{F" ++ green ++ "}") "%{F-}" . myAddSpaces 75
     }
 
 createDBusClient :: IO DBus.Client
