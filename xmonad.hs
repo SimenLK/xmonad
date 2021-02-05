@@ -64,16 +64,16 @@ main = do
             }
 
 desktopLayouts =
-    onWorkspace "1"  webLayout $
+    onWorkspace "1"  fullLayout $
     onWorkspaces (map show [2..9]) defLayout $
     smartBorders (layoutHook defaultConfig)
     where
         defLayout = desktopLayoutModifiers $
             smartBorders $ ResizableTall 1 (5/100) 0.5 [] ||| Full
-        webLayout  = desktopLayoutModifiers $
-            smartBorders $ Full ||| Tall 1 (3/100) 0.65
         fullLayout = desktopLayoutModifiers $
             noBorders $ Full ||| Mirror (Tall 1 (3/100) 0.8)
+        --webLayout  = desktopLayoutModifiers $
+        --    smartBorders $ Full ||| Tall 1 (3/100) 0.65
         --mailLayout = desktopLayoutModifiers $
         --    smartBorders $ Full ||| Tall 1 (3/100) 0.6
         expLayout =
