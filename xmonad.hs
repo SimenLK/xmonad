@@ -148,12 +148,18 @@ myKeys =
                 [ "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify"
                 , "/org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
                 ])
-        , ( "<XF86AudioPrevious>"
+        , ( "<XF86AudioPrev>"
           , spawn $
             unwords
                 [ "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify"
                 , "/org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
                 ])
+        , ( "<XF86MonBrightnessUp>"
+          , spawn $
+            unwords [ "brightnessctl -q s +10%" ])
+        , ( "<XF86MonBrightnessDown>"
+          , spawn $
+            unwords [ "brightnessctl -q s 10%-" ])
         , ("M-S-s", spawn "flameshot gui")
         , ("M-S-h", sendMessage MirrorExpand)
         , ("M-S-l", sendMessage MirrorShrink)
