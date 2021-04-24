@@ -27,6 +27,7 @@ import XMonad.Layout.ResizableTile
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.Grid
 import XMonad.Layout.Circle
+import XMonad.Layout.Spacing
 import           XMonad.Util.NamedWindows         (getName)
 import           Codec.Binary.UTF8.String         (decodeString)
 
@@ -52,7 +53,7 @@ main = do
             -- , urgencyHook = LibNotifyUrgencyHook
             , terminal = "termite"
             , keys = myKeys <+> keys defaultConfig
-            , borderWidth = 1
+            , borderWidth = 2
             , normalBorderColor = "gray"
             , focusedBorderColor = "crimson"
             , focusFollowsMouse = False
@@ -64,29 +65,19 @@ main = do
             }
 
 desktopLayouts =
-    onWorkspace "1"  fullLayout $
+    onWorkspace "1" fullLayout $
     onWorkspaces (map show [2..9]) defLayout $
     smartBorders (layoutHook defaultConfig)
     where
-        defLayout = desktopLayoutModifiers $
-            smartBorders $ ResizableTall 1 (5/100) 0.5 [] ||| Full
-        fullLayout = desktopLayoutModifiers $
-            noBorders $ Full ||| Mirror (Tall 1 (3/100) 0.8)
-        --webLayout  = desktopLayoutModifiers $
-        --    smartBorders $ Full ||| Tall 1 (3/100) 0.65
-        --mailLayout = desktopLayoutModifiers $
-        --    smartBorders $ Full ||| Tall 1 (3/100) 0.6
-        expLayout =
-          desktopLayoutModifiers $
-          smartBorders $
-          avoidStruts $
-            ThreeColMid 1 (3/100) (3/7)
-            ||| ResizableTall 1 (3/100) (1/2) []
-            ||| Mirror (ResizableTall 1 (3/100) (1/2) [])
-            ||| noBorders Full
-            ||| Circle
-            ||| Grid
-
+      defLayout =
+        desktopLayoutModifiers $
+        smartBorders $
+          spacingRaw True (Border 0 1 1 1) True (Border 5 3 5 5) True
+            $ layoutHook def
+          ||| Full
+      fullLayout =
+        desktopLayoutModifiers $
+        noBorders $ Mirror (Tall 1 (3/100) 0.8) ||| Full
 
 myManageHook =
     composeAll . concat $
