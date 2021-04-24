@@ -140,11 +140,11 @@ myKeys =
         , ("M-S-p", spawn "passmenu")
         , ("S-M-n", spawn "nautilus --no-desktop --browser")
         -- , ("S-M-q", spawn "gnome-session-quit --force")
-        , ("<XF86AudioMute>", spawn "amixer -q -D pulse sset Master toggle")
+        , ("<XF86AudioMute>", spawn "amixer -q sset Master toggle")
         , ( "<XF86AudioRaiseVolume>"
-          , spawn "amixer -q -D pulse sset Master 6000+ unmute")
+          , spawn "amixer -q sset Master 6000+ unmute")
         , ( "<XF86AudioLowerVolume>"
-          , spawn "amixer -q -D pulse sset Master 6000- unmute")
+          , spawn "amixer -q sset Master 6000- unmute")
         , ( "<XF86AudioPlay>"
           , spawn $
             unwords
